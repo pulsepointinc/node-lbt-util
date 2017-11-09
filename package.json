@@ -37,7 +37,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "mocha test",
-    "release": "node node_modules/node-release/Release.js -p . --debug true --build \"npm test\""
+    "release": "node node_modules/node-release/Release.js -p `pwd` --debug true --build \"npm test\""
   },
   "eslintConfig": {
     "root": true,
