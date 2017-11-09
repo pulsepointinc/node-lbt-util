@@ -25,13 +25,13 @@ describe('BrowserMobProxyScaffolding tests', () => {
     wrapper.binaryURL = 'http://127.0.0.1:3000/helloworld.zip';
     wrapper.browserMobDir = tmpBmDir.name;
     wrapper.cwd = `${wrapper.browserMobDir}${path.sep}bm`;
-    wrapper.cmdArgArray = ['-jar', 'HelloWorld.jar'];
+    wrapper.getArgs = () => ['-jar', 'HelloWorld.jar'];
     wrapper.startupRegex = new RegExp(/Hello World/);
     tmpBmDir.removeCallback();
   });
   afterEach(() => {
     tmpBmDir.removeCallback();
-    return wrapper.stop();
+    return wrapper.stop().catch(() => { });
   });
 
   it('should install browsermob-proxy', () => {
@@ -41,34 +41,33 @@ describe('BrowserMobProxyScaffolding tests', () => {
     });
   });
 
-  it('should start browsermob-proxy', () => wrapper.install().then(() => wrapper.start()).then((proc) => {
-    assert.isNotNull(proc);
-    assert.isFalse(proc.killed);
+  it('should start browsermob-proxy', () => wrapper.install().then(() => wrapper.start()).then((s) => {
+    assert.isNotNull(s.process);
+    assert.isFalse(s.process.killed);
   }));
 
-  it('should stop browsermob-proxy', () => {
-    wrapper.install().then(() => wrapper.start())
-      .then((proc) => {
-        assert.isNotNull(proc);
-        return wrapper.stop().then(() => proc);
+  it('should stop browsermob-proxy', () =>
+    wrapper.install()
+      .then(() => wrapper.start())
+      .then(() => {
+        assert.isNotNull(wrapper.process);
+        return wrapper.stop().then(() => wrapper.process);
       })
       .then((proc) => {
         assert.isTrue(proc.killed);
       })
-      .catch((ex) => {
-        wrapper.stop().then(() => { throw ex; });
-      });
-  });
+      .catch(ex => wrapper.stop().then(() => { throw ex; })));
 
   it('should stop browsermob-proxy on startup timeout', () => {
     wrapper.startupRegex = new RegExp(/Will Not Happen/);
+    wrapper.startTimeoutMs = 750;
     return wrapper.install()
       .then(() => wrapper.start())
       .then(() => {
         throw new Error('proxy started unexpectedly');
       })
       .catch((error) => {
-        assert.equal('Process exited with exit code 0', error.message);
+        assert.equal('Process failed to start after 750ms and was killed; its exit code was 143', error.message);
       });
   });
 }).timeout(10000);

@@ -1,47 +1,49 @@
 {
-    "name": "lbt-util",
-    "description": "local browser testing utilities for network-recording capable selenium tests",
-    "version": "1.0.0-SNAPSHOT",
-    "license": "GPL-3.0",
-    "keywords": [
-        "selenium",
-        "testing",
-        "network",
-        "proxy"
-    ],
-    "author": {
-        "name": "Eugene Rachitskiy",
-        "email": "erachitskiy@pulsepoint.com"
-    },
-    "dependencies": {
-        "selenium-standalone": "",
-        "browsermob-proxy": "",
-        "find-node-modules": "",
-        "mkdirp": "",
-        "decompress": "",
-        "follow-redirects": ""
-    },
-    "devDependencies": {
-        "mocha":"",
-        "chai":"",
-        "express": "",
-        "tmp": "",
-        "node-release": "pulsepointinc/node-release#node-release-1.0.5",
-        "eslint": "",
-        "eslint-plugin-import": "",
-        "eslint-config-airbnb-base": ""
-    },
-    "main": "index.js",
-    "scripts": {
-        "lint": "eslint",
-        "test": "mocha test",
-        "release": "node node_modules/node-release/Release.js -p . --debug true --build \"npm test\""
-    },
-    "eslintConfig": {
-        "root": true,
-        "extends": "airbnb-base",
-        "env": {
-            "node": true
-        }
+  "name": "lbt-util",
+  "description": "local browser testing utilities for network-recording capable selenium tests",
+  "version": "1.0.0-SNAPSHOT",
+  "license": "GPL-3.0",
+  "keywords": [
+    "selenium",
+    "testing",
+    "network",
+    "proxy"
+  ],
+  "author": {
+    "name": "Eugene Rachitskiy",
+    "email": "erachitskiy@pulsepoint.com"
+  },
+  "dependencies": {
+    "selenium-standalone": "",
+    "browsermob-proxy": "",
+    "find-node-modules": "",
+    "mkdirp": "",
+    "decompress": "",
+    "follow-redirects": "",
+    "debug": "",
+    "portfinder": ""
+  },
+  "devDependencies": {
+    "mocha": "",
+    "chai": "",
+    "express": "",
+    "tmp": "",
+    "node-release": "pulsepointinc/node-release#node-release-1.0.5",
+    "eslint": "",
+    "eslint-plugin-import": "",
+    "eslint-config-airbnb-base": ""
+  },
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "mocha test",
+    "release": "node node_modules/node-release/Release.js -p . --debug true --build \"npm test\""
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "airbnb-base",
+    "env": {
+      "node": true
     }
+  }
 }
