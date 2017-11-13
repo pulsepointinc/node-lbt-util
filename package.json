@@ -28,7 +28,7 @@
     "chai": "",
     "express": "",
     "tmp": "",
-    "node-release": "pulsepointinc/node-release#node-release-1.0.5",
+    "node-release": "pulsepointinc/node-release#node-release-1.0.6",
     "eslint": "",
     "eslint-plugin-import": "",
     "eslint-config-airbnb-base": ""
