@@ -21,12 +21,13 @@ describe('BrowserMobProxyScaffolding tests', () => {
   beforeEach(() => {
     /* make a temp dir */
     tmpBmDir = tmp.dirSync();
-    wrapper = new BrowserMobProxyScaffolding();
-    wrapper.binaryURL = 'http://127.0.0.1:3000/helloworld.zip';
-    wrapper.browserMobDir = tmpBmDir.name;
-    wrapper.cwd = `${wrapper.browserMobDir}${path.sep}bm`;
-    wrapper.getArgs = () => ['-jar', 'HelloWorld.jar'];
-    wrapper.startupRegex = new RegExp(/Hello World/);
+    wrapper = new BrowserMobProxyScaffolding({
+      binaryURL: 'http://127.0.0.1:3000/helloworld.zip',
+      browserMobDir: tmpBmDir.name,
+      cwd: `${tmpBmDir.name}${path.sep}bm`,
+      getArgs: () => ['-jar', 'HelloWorld.jar'],
+      startupRegex: new RegExp(/Hello World/),
+    });
     tmpBmDir.removeCallback();
   });
   afterEach(() => {
@@ -35,9 +36,9 @@ describe('BrowserMobProxyScaffolding tests', () => {
   });
 
   it('should install browsermob-proxy', () => {
-    assert.isFalse(fs.existsSync(wrapper.browserMobDir));
+    assert.isFalse(fs.existsSync(wrapper.config.browserMobDir));
     return wrapper.install().then(() => {
-      assert.isTrue(fs.existsSync(wrapper.browserMobDir));
+      assert.isTrue(fs.existsSync(wrapper.config.browserMobDir));
     });
   });
 
@@ -47,8 +48,7 @@ describe('BrowserMobProxyScaffolding tests', () => {
   }));
 
   it('should stop browsermob-proxy', () =>
-    wrapper.install()
-      .then(() => wrapper.start())
+    wrapper.start()
       .then(() => {
         assert.isNotNull(wrapper.process);
         return wrapper.stop().then(() => wrapper.process);
@@ -59,10 +59,9 @@ describe('BrowserMobProxyScaffolding tests', () => {
       .catch(ex => wrapper.stop().then(() => { throw ex; })));
 
   it('should stop browsermob-proxy on startup timeout', () => {
-    wrapper.startupRegex = new RegExp(/Will Not Happen/);
-    wrapper.startTimeoutMs = 750;
-    return wrapper.install()
-      .then(() => wrapper.start())
+    [wrapper.config.startupRegex, wrapper.config.startTimeoutMs]
+      = [new RegExp(/Will Not Happen/), 750];
+    return wrapper.start()
       .then(() => {
         throw new Error('proxy started unexpectedly');
       })
