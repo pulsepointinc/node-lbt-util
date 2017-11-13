@@ -11,5 +11,5 @@ describe('SeleniumScaffolding tests', () => {
       assert.isTrue(proc.killed);
     })
       .catch(ex => scaffolding.stop().then(() => { throw ex; }));
-  });
-}).timeout(10000);
+  }).timeout(10000);
+});
