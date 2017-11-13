@@ -1,7 +1,7 @@
 {
   "name": "node-lbt-util-ET-2725",
   "description": "local browser testing utilities for network-recording capable selenium tests",
-  "version": "1.0.1",
+  "version": "1.0.2-SNAPSHOT",
   "license": "GPL-3.0",
   "keywords": [
     "selenium",
