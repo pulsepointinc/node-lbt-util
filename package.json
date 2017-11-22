@@ -1,7 +1,7 @@
 {
   "name": "node-lbt-util",
   "description": "local browser testing utilities for network-recording capable selenium tests",
-  "version": "1.0.0-SNAPSHOT",
+  "version": "1.0.0",
   "license": "GPL-3.0",
   "keywords": [
     "selenium",
